@@ -74,6 +74,8 @@ function New-Log {
         [switch] $UseGlobalVariable = $true
     )
  
+    $elevated = $null
+ 
     if ($PSCmdlet.ParameterSetName -eq 'EventLog') {
         $logType = 'EventLog'
         # when creating (and writing) to the event log, you need to run with elevated user rights
@@ -258,7 +260,6 @@ function Write-Log {
                     # when component and file are equal
                     if($component -eq $file){
                         $logEntryString = "$((Get-Date).ToString()) $($LogType.ToUpper()) [$($file)] $($LogEntry)"
-                        Write-Verbose $logEntryString ####
                     }
  
                     # log entry when component and file are not equal
@@ -278,7 +279,8 @@ function Write-Log {
 
             # write to the log file
             [void]$mutex.WaitOne()
-            Add-Content -Path $logObject.Path -Value $logEntryString
+            #Add-Content -Path $logObject.Path -Value $logEntryString
+            [System.IO.File]::AppendAllText($logObject.Path, "$($logEntryString)$([System.Environment]::NewLine)")
             $mutex.ReleaseMutex()
 
             # invoke log rotation if log is file
