@@ -13,3 +13,7 @@ Supports logging to
 - Windows Event Log
 
 Also includes a log rotation helper function to keep track of maximum file size and number of log files to keep.
+
+## Usage
+
+Use New-Log to create a new log, and Write-Log to write to it. Both functions have built in help that you can access using the Get-Help cmdlet.
