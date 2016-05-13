@@ -107,23 +107,25 @@ function Write-Log {
                 'Minimal' { $logEntryString = $LogEntry; break }
 
                 'PlainText' {
+                    $logEntryString = "$((Get-Date).ToString()) $($LogType.ToUpper()) $($LogEntry)"
                     # when component and file are equal
-                    if($component -eq $file){
-                        $logEntryString = "$((Get-Date).ToString()) $($LogType.ToUpper()) [$($file)] $($LogEntry)"
-                        Write-Verbose $logEntryString ####
-                    }
+                    #if($component -eq $file){
+                        #$logEntryString = "$((Get-Date).ToString()) $($LogType.ToUpper()) [$($file)] $($LogEntry)"
+                        #Write-Verbose $logEntryString ####
+                    #}
 
                     # log entry when component and file are not equal
-                    else{
-                        $logEntryString = "$((Get-Date).ToString()) $($LogType.ToUpper()) [$($component) - $($file)] $($LogEntry)"
-                    }
+                    #else{
+                        #$logEntryString = "$((Get-Date).ToString()) $($LogType.ToUpper()) [$($component) - $($file)] $($LogEntry)"
+                    #}
                     break
                 }
 
                 'CMTrace' {
                     $date = Get-Date -Format 'MM-dd-yyyy'
                     $time = Get-Date -Format 'HH:mm:ss.ffffff'
-                    $logEntryString = "<![LOG[$LogEntry]LOG]!><time=""$time"" date=""$date"" component=""$component"" context="""" type=""$cmType"" thread=""$pid"" file=""$file"">"
+                    #$logEntryString = "<![LOG[$LogEntry]LOG]!><time=""$time"" date=""$date"" component=""$component"" context="""" type=""$cmType"" thread=""$pid"" file=""$file"">"
+                    $logEntryString = "<![LOG[$LogEntry]LOG]!><time=""$time"" date=""$date"" component="""" context="""" type=""$cmType"" thread=""$pid"" file="""">"
                     break
                 }
             }
