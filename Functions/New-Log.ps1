@@ -128,7 +128,7 @@ function New-Log {
     $logObject = [PSCustomObject] [Ordered] @{
         LogType = $logType
         LogFormat = $Format
-        Path = $Path
+        Path = [System.IO.Path]::GetFullPath($Path)
         MaxLogSize = $MaxLogSize
         MaxLogFiles = $MaxLogFiles
         LogHeader = $Header
